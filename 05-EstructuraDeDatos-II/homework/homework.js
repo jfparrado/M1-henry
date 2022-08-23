@@ -104,7 +104,7 @@ Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero
 */
 function HashTable() {
   this.numBuckets = 35;
-  this.id = null;
+  this.buckets = []
 
   function Bucket() {
     this.clave = null;
@@ -119,39 +119,33 @@ function HashTable() {
     for (let letra of palabra) {
       acumulador += letra.charCodeAt();
     }
-    slothNumber = Math.round(acumulador / numBuckets);
+    slothNumber = Math.round(acumulador / this.numBuckets);
     return slothNumber;
   }
-  HashTable.prototype.set = function (clave, valor) {
-    let nhash = new HashTable;
-    let current = this.id;
-    current = nhash.hash(clave);
-    if (typeof (clave) === "string") {
-      while ((!current) && (clave !== nhash.clave)) {
-        current = current.next;
-      }
-      nhash.clave = clave;
-      nhash.valor = valor;
-      nhash.id = current
-      console.log(nhash)
+  HashTable.prototype.set = function (key, value) {
+    if (typeof key !== "string") throw TypeError("")
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
+    if (!bucket) {
+      bucket = {};
     }
+    bucket[key] = value;
   }
   HashTable.prototype.get = function (key) {
-    let current = this.id;
-    console.log(current);
-    while ((!current) && (key !== this.clave)) {
-      current = current.next;
-      console.log(current)
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
+    if (bucket) {
+      return bucket[key];
+    } else {
+      return null;
     }
-    return
   }
-  HashTable.prototype.hasKey = function () { }
-  let o = new HashTable;
-  o.set('key1', 'val1');
-  o.set('key2', 'val2');
-  o.set('this is a very different string', 44.4);
-  o.get('key1');
-
+  HashTable.prototype.hasKey = function () {
+    const index = this.hash(key);
+    const bucket = this.buckets[index];
+    if (bucket.hasOwnProperty(key)) return true;
+    return false;
+  }
 
   // No modifiquen nada debajo de esta linea
   // --------------------------------
