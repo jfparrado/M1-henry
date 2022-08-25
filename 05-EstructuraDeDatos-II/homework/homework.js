@@ -105,53 +105,53 @@ Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero
 function HashTable() {
   this.numBuckets = 35;
   this.buckets = []
+}
+function Bucket() {
+  this.clave = null;
+  this.valor = null;
+  this.next = null;
+}
+HashTable.prototype.hash = function (input) {
+  let palabra = [...input]
+  let acumulador = 0;
+  for (let letra of palabra) {
+    acumulador += letra.charCodeAt();
+  }
 
-  function Bucket() {
-    this.clave = null;
-    this.valor = null;
-    this.next = null;
+  return acumulador % this.numBuckets;
+}
+HashTable.prototype.set = function (key, value) {
+  if (typeof key !== "string") throw TypeError("Keys must be strings")
+  const index = this.hash(key);
+
+  if (!this.buckets[index]) {
+    this.buckets[index] = {};
   }
-  HashTable.prototype.hash = function (input) {
-    let numBuckets = 35;
-    let palabra = [...input]
-    let acumulador = 0;
-    let slothNumber = 0
-    for (let letra of palabra) {
-      acumulador += letra.charCodeAt();
-    }
-    slothNumber = Math.round(acumulador / this.numBuckets);
-    return slothNumber;
+  this.buckets[index][key] = value;
+}
+HashTable.prototype.get = function (key) {
+  const index = this.hash(key);
+  const bucket = this.buckets[index];
+  if (bucket) {
+    return bucket[key];
+  } else {
+    return null;
   }
-  HashTable.prototype.set = function (key, value) {
-    if (typeof key !== "string") throw TypeError("")
-    const index = this.hash(key);
-    const bucket = this.buckets[index];
-    if (!bucket) {
-      bucket = {};
-    }
-    bucket[key] = value;
+}
+HashTable.prototype.hasKey = function (key) {
+  if (this.get(key)) {
+    return true;
   }
-  HashTable.prototype.get = function (key) {
-    const index = this.hash(key);
-    const bucket = this.buckets[index];
-    if (bucket) {
-      return bucket[key];
-    } else {
-      return null;
-    }
-  }
-  HashTable.prototype.hasKey = function () {
-    const index = this.hash(key);
-    const bucket = this.buckets[index];
-    if (bucket.hasOwnProperty(key)) return true;
+  else {
     return false;
   }
+};
 
-  // No modifiquen nada debajo de esta linea
-  // --------------------------------
+// No modifiquen nada debajo de esta linea
+// --------------------------------
 
-  module.exports = {
-    Node,
-    LinkedList,
-    HashTable,
-  };
+module.exports = {
+  Node,
+  LinkedList,
+  HashTable,
+};

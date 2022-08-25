@@ -13,13 +13,13 @@ const {
 
 describe('countArray', () => {
     it("debe determinar la suma de todos los números contenidos en el array.", () => {
-        expect(countArray([1,1,1,1,1,1,1,1,1,1])).toBe(10)
+        expect(countArray([1, 1, 1, 1, 1, 1, 1, 1, 1, 1])).toBe(10)
     })
     it("debe determinar la suma de todos los números incluso si existen arrays anidados.", () => {
-        expect(countArray([1, [2, [3,4]], [5,6], 7])).toBe(28)
+        expect(countArray([1, [2, [3, 4]], [5, 6], 7])).toBe(28)
     })
     it("debe determinar la suma de todos los números incluso si existen mas arrays anidados.", () => {
-        expect(countArray([1, [2, [3,[4,4,4]]], [5,6], 7])).toBe(36)
+        expect(countArray([1, [2, [3, [4, 4, 4]]], [5, 6], 7])).toBe(36)
     })
 })
 
@@ -39,16 +39,16 @@ describe('countProps', () => {
             a: {
                 a1: 10,
                 a2: 'Franco',
-                a3: {f: 'r', a: 'n', c: {o: true}}
+                a3: { f: 'r', a: 'n', c: { o: true } }
             },
             b: 2,
-            c: [1, {a: 1}, 'Franco']
-            }
+            c: [1, { a: 1 }, 'Franco']
+        }
         expect(countProps(objeto)).toBe(10)
     })
 })
 
-describe('changeNotNumbers', () =>{
+describe('changeNotNumbers', () => {
     it('deberá cambiar aquellos valores que no puedan castearse(convertirse) a numeros por `Kiricocho` y devolver la cantidad de cambios que hizo', () => {
         let listOne = new LinkedList();
         listOne.add(1);
